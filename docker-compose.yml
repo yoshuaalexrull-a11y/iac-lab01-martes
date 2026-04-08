@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web1:
+    build: 
+      context: .
+      dockerfile: src/web1/Dockerfile
+    container_name: web1_container
+    ports:
+      - "4000:80"
+
+  web2:
+    build: 
+      context: .
+      dockerfile: src/web2/Dockerfile
+    container_name: web2_container
+    ports:
+      - "4001:80"
