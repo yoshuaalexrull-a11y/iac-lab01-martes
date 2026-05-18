@@ -1,18 +1,35 @@
-version: '3.8'
-
 services:
-  web1:
+  web01:
     build: 
-      context: .
-      dockerfile: src/web1/Dockerfile
-    container_name: web1_container
-    ports:
-      - "4000:80"
-
-  web2:
-    build: 
-      context: .
-      dockerfile: src/web2/Dockerfile
-    container_name: web2_container
+      context: ./src-web
+      dockerfile: Dockerfile
+    container_name: web-LOCAL-01
     ports:
       - "4001:80"
+    networks:
+      - mi_red
+
+  api:
+    build:
+      context: .
+    container_name: api01
+    ports:
+      - "4002:8080"
+    networks:
+      - mi_red
+
+  bd:
+    image: postgres:15
+    container_name: bd
+    environment:
+      POSTGRES_DB: mi_base_datos
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: password
+    ports:
+      - "4003:5432"
+    networks:
+      - mi_red
+
+networks:
+  mi_red:
+    driver: bridge
